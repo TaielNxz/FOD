@@ -17,6 +17,15 @@
 		“celulares.txt” con todos los celulares del mismo. El archivo de texto generado
 		podría ser utilizado en un futuro como archivo de carga (ver inciso a), por lo que
 		debería respetar el formato dado para este tipo de archivos en la NOTA 2.
+		
+	NOTA 1: El nombre del archivo binario de celulares debe ser proporcionado por el usuario.
+	
+	NOTA 2: El archivo de carga debe editarse de manera que cada celular se especifique en
+	tres líneas consecutivas. 
+	En la primera se especifica: código de celular, el precio y marca, 
+	en la segunda el stock disponible, stock mínimo y la descripción 
+	y en la tercera nombre en ese orden. 
+	Cada celular se carga leyendo tres líneas del archivo “celulares.txt”.
 }
 
 
@@ -87,12 +96,12 @@ begin
 	while ( not eof(archivo_texto) ) do 
 	begin
 	
+	
 		{ leer datos del archivo de texto }
 		with c do begin
-			readln( archivo_texto , codigo , nombre );
-			readln( archivo_texto , marca );
-			readln( archivo_texto , precio , stock_minimo , stock_disponible );
-			readln( archivo_texto , descripcion );
+			readln( archivo_texto , codigo , precio , marca );
+			readln( archivo_texto , stock_disponible , stock_minimo , descripcion );
+			readln( archivo_texto , nombre );
 		end;
 		
 		{ escribir en archivo binario }
@@ -155,7 +164,7 @@ begin
 		
 		{ imprimir celulares que tengan stock por debajo del minimo }
 		if( c.stock_disponible < c.stock_minimo ) then
-			writeln( 'Codigo:', c.codigo , '  Nombre:' , c.nombre , '  Disponibles:' , c.stock_disponible );
+			imprimirCelular( c );
 
 	end;
 	
@@ -182,8 +191,8 @@ begin
 		read( archivo_binario , c );
 		
 		{ imprimir celulares que tengan una descripcion }
-		if( c.descripcion <> '' ) then
-			writeln( 'Codigo: ', c.codigo , '  Nombre: ' , c.nombre , '  disponibles: ' , c.stock_disponible );
+		if( c.descripcion <> ' ' ) then
+			imprimirCelular( c );
 			
 	end;
 	
@@ -214,10 +223,9 @@ begin
 		
 		{ escribir registro en archivo de texto }
 		with c do begin
-			writeln( archivo_texto, codigo , ' ' , nombre );
-			writeln( archivo_texto, marca );
-			writeln( archivo_texto, precio:1:1 , ' ' , stock_minimo , ' ' , stock_disponible );
-			writeln( archivo_texto, descripcion );
+			writeln( archivo_texto, codigo , ' ' , precio:1:1 , ' ' , marca );
+			writeln( archivo_texto, stock_disponible , ' ' , stock_minimo , ' ' , descripcion );
+			writeln( archivo_texto, nombre );
 		end;
 	
 	end;
