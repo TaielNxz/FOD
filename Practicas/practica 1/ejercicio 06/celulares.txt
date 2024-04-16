@@ -1,0 +1,12 @@
+3000 300.0 marca1
+30 20 
+nombre1
+3001 400.0 marca2
+31 21 
+nombre2
+3002 500.0 marcaConDescripcion
+32 22 tremendo
+nombreConDescripcion
+3003 600.0 marcaStockMinimo
+30 50 
+nombreStockMinimo
