@@ -1,0 +1,2 @@
+Numero de Empleado:          3 Nombre:          3 Apellido:          3 Edad:          3 DNI:          0
+Numero de Empleado:          4 Nombre:          4 Apellido:          4 Edad:          4 DNI:          0
