@@ -1,0 +1,16 @@
+3000   nombreSinDescripcion
+marcaSinDescripcion
+300.0 40 50
+
+3001   nombre1
+marca1
+400.0 40 60
+tremendo
+3002   nombre2
+marca2
+401.0 2 50
+buenisimo
+3003   nombreStockMinimo
+marcaStockMinimo
+500.0 50 20
+exelente
