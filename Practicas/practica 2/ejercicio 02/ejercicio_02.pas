@@ -24,6 +24,8 @@
 		
 	NOTA: Para la actualización del inciso a) los archivos deben ser recorridos sólo una vez.
 }
+
+
 program practica02_ejercicio02;
 CONST
 	valorAlto = 9999;
@@ -55,17 +57,21 @@ procedure menu( var opcion : integer );
 begin
 	writeln;
 	writeln('========================================================================');
-	writeln('1. Actualizar Mestro ');
-	writeln('2. Exportar a texto alumnos con mas aprobadas');
-	writeln('3. Mostrar maestro');
-	writeln('4. Mostrar detalle');
-	writeln('5. Salir');
+	writeln('1. Actualizar maestro con 1 detalle');
+	writeln('2. Exportar a texto alumnos con mas finales aprobados que pendientes');
+	writeln('3. Crear maestro');
+	writeln('4. Crear detalle');
+	writeln('5. Mostrar maestro');
+	writeln('6. Mostrar detalle');
+	writeln('7. Salir');
 	writeln('========================================================================');
 	write('opcion: ');
 	readln( opcion );
 	writeln;
 end;
-
+{ ======================================================================================================================== }
+{                                                         OPCION 1                                                         }
+{ ======================================================================================================================== }
 procedure leer( var archivo:archivo_detalle ; var dato:alumno_detalle );
 begin
 
@@ -75,9 +81,7 @@ begin
 		dato.codigo := valorAlto;
 		
 end;
-{ ======================================================================================================================== }
-{                                                         OPCION 1                                                         }
-{ ======================================================================================================================== }
+
 procedure actualizarMaestro( var maestro:archivo_maestro ; var detalle:archivo_detalle );
 var
 	regm : alumno_maestro;
@@ -91,7 +95,7 @@ begin
 	reset( maestro );
 	reset( detalle );
 	
-	{ leer ambos archivos }
+	{ leer detalle }
 	leer( detalle , regd );
 	
 	{ recorrer todo el archivo detalle }
@@ -147,6 +151,7 @@ begin
 
 	{ notificar exito }
 	writeln('actualizado correctamente...');
+
 end;
 { ======================================================================================================================== }
 {                                                         OPCION 2                                                         }
@@ -173,7 +178,7 @@ begin
 		if ( regm.finalAprobado > regm.finalPendiente ) then
 			with regm do
 				writeln ( texto , codigo , ' ' , nombre , ' ' , apellido , ' ' , finalPendiente , ' ' , finalAprobado );
-				
+
 	end;
 	
 	{ cerrar ambos archivos }
@@ -182,9 +187,108 @@ begin
 
 	{ notificar exito }
 	writeln('exportado correctamente...');
+	
 end;
 { ======================================================================================================================== }
 {                                                         OPCION 3                                                         }
+{ ======================================================================================================================== }
+procedure crearMaestro( var maestro:archivo_maestro );
+
+	procedure leerAlumnoMaestro( var a:alumno_maestro );
+	begin
+		with a do 
+		begin
+			writeln('------------------------');
+			write('codigo: ');
+			readln( codigo );
+			if ( codigo <> -1 ) then
+			begin
+				write('nombre: ');
+				readln( nombre );
+				write('apellido: ');
+				readln( apellido );
+				write('cantidad de finales pendientes: ');
+				readln( finalPendiente );	
+				write('cantidad de finales aprobados: ');
+				readln( finalAprobado );	
+			end;
+		end;
+	end;
+
+var
+	a : alumno_maestro;
+begin
+
+	{ crear archivo }
+	rewrite( maestro );
+
+	{ leer primer alumno }
+	leerAlumnoMaestro( a );
+
+	{ agregar nuevos alumnos al archivo hasta que se ingrese el codigo -1 }
+	while ( a.codigo <> -1 ) do 
+	begin
+		
+		{ agregar alumno al archivo maestro }
+		write( maestro , a );
+			
+		{ leer proximo alumno }
+		leerAlumnoMaestro( a );
+
+	end;
+	
+	{ cerrar archivo maestro }
+	close( maestro ); 
+	
+end;
+{ ======================================================================================================================== }
+{                                                         OPCION 4                                                         }
+{ ======================================================================================================================== }
+procedure crearDetalle( var detalle:archivo_detalle );
+
+	procedure leerAlumnoDetalle( var a:alumno_detalle );
+	begin
+		with a do 
+		begin
+			writeln('------------------------');
+			write('codigo: ');
+			readln( codigo );
+			if ( codigo <> -1 ) then
+			begin
+				write('estado ( 1:pendiente / 2:aprobado ): ');
+				readln( estado );	
+			end;
+		end;
+	end;
+
+var
+	a : alumno_detalle;
+begin
+
+	{ crear archivo }
+	rewrite( detalle );
+
+	{ leer primer alumno }
+	leerAlumnoDetalle( a );
+
+	{ agregar nuevos alumnos al archivo hasta que se ingrese el codigo -1 }
+	while ( a.codigo <> -1 ) do 
+	begin
+		
+		{ agregar alumno al archivo detalle }
+		write( detalle , a );
+			
+		{ leer proximo alumno }
+		leerAlumnoDetalle( a );
+
+	end;
+	
+	{ cerrar archivo }
+	close( detalle ); 
+	
+end;
+{ ======================================================================================================================== }
+{                                                         OPCION 5                                                         }
 { ======================================================================================================================== }
 procedure mostrarMaestro ( var maestro:archivo_maestro );
 
@@ -208,6 +312,7 @@ begin
 	{ abrir archivo }
 	reset( maestro );
 	
+	{ leer e imprimir hasta haber recorrido todo el archivo }
 	while ( not eof(maestro) ) do begin
 	
 		{ leer archivo }
@@ -223,7 +328,7 @@ begin
 	
 end;
 { ======================================================================================================================== }
-{                                                         OPCION 4                                                         }
+{                                                         OPCION 6                                                         }
 { ======================================================================================================================== }
 procedure mostrarDetalle ( var detalle:archivo_detalle );
 
@@ -245,9 +350,10 @@ begin
 	{ abrir archivo }
 	reset( detalle );
 	
+	{ leer e imprimir hasta haber recorrido todo el archivo }
 	while ( not eof(detalle) ) do begin
 	
-		{ leer archivo }
+		{ leer alumno del detalle }
 		read( detalle , a );
 		
 		{ mostrar alumno en consola }
@@ -274,20 +380,22 @@ BEGIN
 	assign( detalle , 'alumnos_detalle' );
 	assign( texto , 'alumnos_texto.txt' );
 
+	{ menu de opciones... }
 	opcion := 0;
-	while ( opcion <> 5 ) do 
+	while ( opcion <> 7 ) do 
 	begin
 		menu( opcion );
 		case opcion of
 			1: actualizarMaestro( maestro , detalle );
 			2: exportarTexto( maestro , texto );
-			3: mostrarMaestro( maestro );
-			4: mostrarDetalle( detalle );
-			5: writeln('fin del programa');
+			3: crearMaestro( maestro );
+			4: crearDetalle( detalle );
+			5: mostrarMaestro( maestro );
+			6: mostrarDetalle( detalle );
+			7: writeln('fin del programa');
 		else
 			writeln('opcion invalida');
 		end;
-
 	end;
 	
 END.
