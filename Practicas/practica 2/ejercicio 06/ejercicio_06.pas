@@ -80,16 +80,9 @@ begin
 	{ recorro todo todos los detalles }
 	for i := 1 to dimF do 
 	begin
-	
-		{ guardo el registro con codigo mas pequeño }
-		if ( vectorRD[i].cod_usuario < regMin.cod_usuario ) then 
-		begin
-			regMin := vectorRD[i];
-			posMin := i;
-		end;
-	
-		{ entre los registros con el mismo codigo, guardo el de la menor fecha }
-		if ( vectorRD[i].cod_usuario = regMin.cod_usuario ) and ( vectorRD[i].fecha < regMin.fecha ) then
+
+		{ guardo el registro con codigo y la fecha mas pequeños }
+		if ( vectorRD[i].cod_usuario < regMin.cod_usuario ) and ( vectorRD[i].fecha < regMin.fecha ) then
 		begin
 			regMin := vectorRD[i];
 			posMin := i;
