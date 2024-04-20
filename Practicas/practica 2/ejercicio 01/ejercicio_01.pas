@@ -14,6 +14,8 @@
 	recorrido una única vez.
 	
 }
+
+
 program practica02_ejercicio01;
 CONST
 	valorAlto = 9999;
@@ -35,36 +37,27 @@ TYPE
 procedure menu( var opcion : integer );
 begin
 	writeln('========================================================================');
-	writeln('1. Compactar archivo detalle ');
-	writeln('2. Mostrar detalle');
-	writeln('3. Mostrar maestro');
-	writeln('4. Salir');
+	writeln('1. Compactar archivo detalle');
+	writeln('2. Crear archivo detalle');
+	writeln('3. Mostrar detalle');
+	writeln('4. Mostrar maestro');
+	writeln('5. Salir');
 	writeln('========================================================================');
 	write('opcion: ');
 	readln( opcion );
 	writeln;
 end;
-
+{ ======================================================================================================================== }
+{                                                         OPCION 1                                                         }
+{ ======================================================================================================================== }
 procedure leer( var archivo:archivo_empleados ; var dato:empleado );
 begin
-
 	if ( not EOF( archivo ) ) then
 		read( archivo, dato )
 	else
 		dato.codigo := valorAlto;
-	
 end;
 
-procedure imprimirEmpleado( e:empleado );
-begin
-	writeln('------------------');
-	writeln('Codigo: ', e.codigo);
-	writeln('Nombre: ', e.nombre);
-	writeln('Monto: ', e.monto:3:1);
-end;
-{ ======================================================================================================================== }
-{                                                         OPCION 1                                                         }
-{ ======================================================================================================================== }
 procedure compactar( var maestro:archivo_empleados ; var detalle:archivo_empleados );
 var
 	regm : empleado;
@@ -79,17 +72,16 @@ begin
 	{ abrir archivo detalle }
 	reset( detalle );
 	
-	{ leer detalle }
+	{ leer primer registro }
 	leer( detalle , regd );
 	
-	{ recorrer todo el detalle }
 	while ( regd.codigo <> valorAlto ) do
 	begin
 		
 		montoTotal := 0;
 		regActual := regd;
 
-		{ recorrer todos los registros con el mismo codigo y sumar sus montos }
+		{ sumar todos los montos que tengan el mismo codigo }
 		while ( regActual.codigo = regd.codigo ) do
 		begin
 		
@@ -105,9 +97,6 @@ begin
 		regm.codigo := regActual.codigo;
 		regm.nombre := regActual.nombre;
 		regm.monto := montoTotal;
-			
-		{ se reubica el puntero en el maestro }	
-		seek( maestro , filepos(maestro) );
 
 		{ se actualiza el maestro }
 		write( maestro , regm );
@@ -120,9 +109,66 @@ begin
 	
 end;
 { ======================================================================================================================== }
-{                                                   OPCIONES 2 y 3                                                         }
+{                                                         OPCION 2                                                         }
 { ======================================================================================================================== }
-procedure mostrarArchivo ( var archivo_binario:archivo_empleados );
+procedure crearDetalle( var detalle:archivo_empleados );
+
+	procedure leerEmpleado( var e:empleado );
+	begin
+		with e do
+		begin
+			writeln('-----------------');
+			write('codigo: ');
+			readln(codigo);
+			if ( codigo <> -1 ) then 
+			begin
+				write('nombre: ');
+				readln(nombre);
+				write('monto: ');
+				readln(monto);
+			end;
+		end;
+	end;
+
+var
+	e : empleado;
+begin
+
+	{ crear archivo }
+	rewrite( detalle );
+	
+	{ leer primer empleado }
+	leerEmpleado( e );
+	
+	{ agregar nuevos empleados al archivo hasta que se ingrese el codigo -1 }
+	while ( e.codigo <> -1 ) do 
+	begin
+		
+		{ agregar empleado al archivo detalle }
+		write( detalle , e );
+		
+		{ leer proximo empleado }
+		leerEmpleado( e );
+		
+	end;
+	
+	{ cerrar archivo }
+	close( detalle )
+
+end;
+{ ======================================================================================================================== }
+{                                                   OPCIONES 3 y 4                                                         }
+{ ======================================================================================================================== }
+procedure mostrarArchivo( var archivo_binario:archivo_empleados );
+
+	procedure imprimirEmpleado( e:empleado );
+	begin
+		writeln('------------------');
+		writeln('Codigo: ', e.codigo);
+		writeln('Nombre: ', e.nombre);
+		writeln('Monto: ', e.monto:3:1);
+	end;
+
 var
 	e : empleado;
 begin
@@ -130,9 +176,10 @@ begin
 	{ abrir archivo }
 	reset( archivo_binario );
 	
+	{ leer e imprimir hasta haber recorrido todo el archivo }
 	while ( not eof (archivo_binario) ) do begin
 	
-		{ leer archivo }
+		{ leer empleado del archivo }
 		read( archivo_binario , e );
 		
 		{ mostrar empleado en consola }
@@ -143,7 +190,6 @@ begin
 	{ cerrar archivo }
 	close( archivo_binario );
 end;
-
 { ======================================================================================================================== }
 {                                                    PROGRAMA PRINCIPAL                                                    }
 { ======================================================================================================================== }
@@ -157,22 +203,17 @@ BEGIN
 	assign( maestro , 'empleados_maestro' );
 	assign( detalle , 'empleados_detalle' );
 	
-	{ variable para las opciones }
+	{ menu de opciones... }
 	opcion := 0;
-
-	{ mostrar opciones hasta ingresar el 4... }
-	while ( opcion <> 4 ) do 
+	while ( opcion <> 5 ) do 
 	begin
-	
-		{ mostrar en consola un menu con opciones }
 		menu( opcion );
-		
-		{ opciones... }
 		case opcion of
 			1: compactar( maestro , detalle );
-			2: mostrarArchivo( detalle );
-			3: mostrarArchivo( maestro );
-			4: writeln('fin del programa');
+			2: crearDetalle( detalle );
+			3: mostrarArchivo( detalle );
+			4: mostrarArchivo( maestro );
+			5: writeln('fin del programa');
 		else
 			writeln('opcion invalida');
 		end;
