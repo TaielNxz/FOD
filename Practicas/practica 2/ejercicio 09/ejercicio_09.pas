@@ -135,6 +135,9 @@ begin
 	
 	writeln(' Total General de Votos: ' , totalVotos);
 	
+	{ cerrar maestro }
+	reset( maestro );
+	
 end;
 { ======================================================================================================================== }
 {                                                         OPCION 2                                                         }
