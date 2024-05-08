@@ -1,0 +1,4 @@
+nro_usuario: 200 cantidadMensajesEnviados: 29
+nro_usuario: 201 cantidadMensajesEnviados: 6
+nro_usuario: 202 cantidadMensajesEnviados: 13
+nro_usuario: 203 cantidadMensajesEnviados: 103
