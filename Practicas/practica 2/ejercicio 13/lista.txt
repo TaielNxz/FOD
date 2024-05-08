@@ -1,0 +1,1 @@
+destino: brasil, fecha: 11, hora: 11, asientos disponibles: 8002
