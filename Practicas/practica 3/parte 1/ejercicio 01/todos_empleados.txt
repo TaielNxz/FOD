@@ -1,0 +1,4 @@
+Numero de Empleado:          1 Nombre:          1 Apellido:          1 Edad:          1 DNI:          1
+Numero de Empleado:          5 Nombre:          5 Apellido:          5 Edad:          5 DNI:          5
+Numero de Empleado:          3 Nombre:          3 Apellido:          3 Edad:          3 DNI:          3
+Numero de Empleado:          4 Nombre:          4 Apellido:          4 Edad:          4 DNI:          4
