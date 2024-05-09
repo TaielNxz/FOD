@@ -1,0 +1,7 @@
+Localidad: 1Municipio: 1Cantidad de casos: 50
+Localidad: 1Municipio: 2Cantidad de casos: 30
+Localidad: 1Municipio: 3Cantidad de casos: 100
+Localidad: 1Municipio: 4Cantidad de casos: 10
+Localidad: 2Municipio: 1Cantidad de casos: 28
+Localidad: 2Municipio: 2Cantidad de casos: 10
+Localidad: 2Municipio: 3Cantidad de casos: 110
