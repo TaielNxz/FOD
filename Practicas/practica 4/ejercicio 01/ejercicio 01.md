@@ -12,32 +12,33 @@ alumnos como un árbol B de orden M.
 ```pascal
 
 const 
-  M = 5; // orden del arbol
+    M = 5; // orden del arbol
 
 type 
-  alumno = record
-    nombre: string[20];
-    apellido: string[20];
-    dni: integer;
-    legajo: integer;
-    anio: integer;
-  end;
+    alumno = record
+        nombre: string[20];
+        apellido: string[20];
+        dni: integer;
+        legajo: integer;
+        anio: integer;
+    end;
 
-  clave = alumno;
+    clave = alumno;
 
-  nodoPtr = ^nodo;
-  nodo = record
-    claves: array[1..M-1] of clave;
-    hijos: array[0..M] of nodoPtr;
-    cantClaves: integer;
-    esHoja: boolean;
-  end;
+    nodoPtr = ^nodo;
+        nodo = record
+        claves: array[1..M-1] of clave;
+        hijos: array[0..M] of nodoPtr;
+        cantClaves: integer;
+        esHoja: boolean;
+    end;
 
-  arbolB = file of nodo;
+    arbolB = file of nodo;
 
 var
-  arbol: arbolB;  // Variable para el archivo del árbol B
-  raiz: nodoPtr;  // Puntero a la raíz del árbol B
+    arbol: arbolB;  // Variable para el archivo del árbol B
+    raiz: nodoPtr;  // Puntero a la raíz del árbol B
+
 ```
 
 
@@ -66,13 +67,13 @@ entero, ignorar la parte decimal).
     - 𝐶 es el tamaño que ocupa el campo referido a la cantidad de claves (4 bytes).
     - Usamos la siguiente formula "N = (M−1) × A + M × B + C"
 
-            N = ( M − 1 ) ×  A + M × B + C
+          N = ( M − 1 ) ×  A + M × B + C
         512 = ( M − 1 ) × 64 + M × 4 + 4    // reemplazamos lso valores
         512 = 64M − 64 + 4M + 4             // distribuimos las multiplicaciones
         512 = 68M − 60                      // simplificamos
         572 = 68M                           // pasamos la resa como suma
-            M = 572/68                      // despejamos M y dividimos
-            M ≈ 8.41
+          M = 572/68                        // despejamos M y dividimos
+          M ≈ 8.41
 
     Como 𝑀 tiene que ser un número entero, ignoramos la parte decimal y tomamos 𝑀 = 8.
 
