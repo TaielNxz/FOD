@@ -167,4 +167,5 @@ los casos? ¿Cuáles serían estos casos?
 f. ¿Qué ocurre si desea buscar un alumno por un criterio diferente? ¿Cuántas
 lecturas serían necesarias en el peor de los casos?
 
-    Si se buscara un alumno por un criterio diferente en el peor caso se van a hacer N lecturas, siendo N la cantidad de nodos del árbol.
+    Si se buscara un alumno por un criterio diferente en el peor caso se van a hacer N lecturas, 
+    siendo N la cantidad de nodos del árbol.
