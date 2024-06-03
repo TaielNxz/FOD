@@ -12,6 +12,8 @@
 	Nota: tenga en cuenta que puede haber meses en los que los clientes no realizaron
 	compras. No es necesario que informe tales meses en el reporte.
 }
+
+
 program practica02_ejercicio08;
 const
 	valorAlto = 999;
@@ -237,9 +239,9 @@ begin
 	close( maestro );
 	
 end;
-{ ============================================================================================= }
-{                                      PROGRAMA PRINCIPAL                                       }
-{ ============================================================================================= }
+{ ======================================================================================================================== }
+{                                                    PROGRAMA PRINCIPAL                                                    }
+{ ======================================================================================================================== }
 VAR
 	maestro : archivo_maestro;
 	opcion : integer;

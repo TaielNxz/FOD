@@ -27,6 +27,8 @@
 	casos activos (las localidades pueden o no haber sido actualizadas).
 
 }
+
+
 program practica02_ejercicio07;
 const
 	valorAlto = 9999;

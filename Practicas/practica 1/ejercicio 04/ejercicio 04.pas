@@ -281,7 +281,7 @@ begin
 	begin
 		read( archivo_logico , e );
 		with e do 
-			writeln ( archivo_texto , 'Numero de Empleado: ', numero:10 , ' Nombre: ' , nombre:10 , ' Apellido: ' , apellido:10 , ' Edad: ' , edad:10 , ' DNI: ' , dni:10 );
+			writeln( archivo_texto , 'Numero de Empleado: ', numero:10 , ' Nombre: ' , nombre:10 , ' Apellido: ' , apellido:10 , ' Edad: ' , edad:10 , ' DNI: ' , dni:10 );
 	end;
 	
 	{ Cerrar archivos }
